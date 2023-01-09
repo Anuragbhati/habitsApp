@@ -1,11 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import { useContext } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../../App";
 const NavBar = () => {
   let navigate = useNavigate();
+  const { flag, setFlag } = useContext(AppContext);
   const [userName, setUserName] = useState("");
-  const [flag, setFlag] = useState(false);
+  console.log(flag);
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
 
@@ -84,7 +87,7 @@ const NavBar = () => {
                         window.localStorage.removeItem("jwt");
                         window.localStorage.removeItem("user");
                         window.localStorage.removeItem("bookmarks");
-                        setFlag(true);
+                        setFlag(!flag);
                         navigate("/login");
                       }}
                     >

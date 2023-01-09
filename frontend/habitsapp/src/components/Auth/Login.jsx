@@ -2,9 +2,13 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../App";
+import { useContext } from "react";
 
 const Login = () => {
   let navigate = useNavigate();
+  const { flag, setFlag } = useContext(AppContext);
+  console.log(flag);
   const [loginData, setLoginData] = useState({
     identifier: "",
     password: "",
@@ -22,8 +26,10 @@ const Login = () => {
         localStorage.setItem("jwt", jwt);
         localStorage.setItem("user", JSON.stringify(user));
         setUserDetail((userDetail) => ({ ...userDetail, ...user }));
+        setFlag(true);
         navigate("/");
       })
+
       .catch(() => {
         alert("Error!");
       });
