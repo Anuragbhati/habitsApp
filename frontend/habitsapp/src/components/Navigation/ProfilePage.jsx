@@ -20,7 +20,7 @@ const ProfilePage = () => {
     let user = JSON.parse(localStorage.getItem("user"));
 
     setUserData({ ...userData, ...user });
-
+    console.log(user.id);
     getUserHabits(user.id);
     console.log(userHabits);
   }, []);

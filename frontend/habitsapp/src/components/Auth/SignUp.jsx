@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  console.log("running");
   const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -12,7 +13,7 @@ const SignUp = () => {
   });
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log(signUpData);
+    // console.log(signUpData);
     await axios
       .post("http://localhost:1337/api/auth/local/register", signUpData)
       .then((res) => {

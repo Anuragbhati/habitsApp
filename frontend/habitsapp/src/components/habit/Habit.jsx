@@ -7,6 +7,10 @@ const Habit = () => {
   let navigate = useNavigate();
   const [newHabit, setNewHabit] = useState("");
   const [habits, setHabits] = useState([]);
+  const [userData, setUserData] = useState({
+    ...JSON.parse(localStorage.getItem("user")),
+  });
+
   let [habitLimit, setHabitLimit] = useState(0);
   useEffect(() => {
     getUserHabits();
@@ -14,7 +18,7 @@ const Habit = () => {
   const getUserHabits = () => {
     axios
       .get(
-        `http://localhost:1337/api/habits?populate=*&filters[user][id][$eq]=1`
+        `http://localhost:1337/api/habits?populate=*&filters[user][id][$eq]=${userData.id}`
       )
       .then((res) => {
         setHabits(res.data.data);
@@ -31,7 +35,7 @@ const Habit = () => {
         .post("http://localhost:1337/api/habits", {
           data: {
             habitName: newHabit,
-            user: 1,
+            user: userData.id,
           },
         })
         .then((res) => {
@@ -58,6 +62,7 @@ const Habit = () => {
             type="text"
             id="habit"
             className="form-control"
+            autoComplete="off"
             placeholder="enter your habit"
             onChange={(e) => {
               setNewHabit(e.target.value);
